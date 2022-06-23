@@ -1,18 +1,30 @@
+"use strict";
 // GRAB INPUT
 // PASS TO CREATE TABLE ROW
 // APPEND TABLE ROW
 const form = document.querySelector('#form');
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formValues = getFormValues();
-    const tableRow = createTableRow(formValues);
-    const tableBody = document.querySelector('#table');
-    tableBody.appendChild(tableRow);
-});
+function setupEventListerner(form) {
+    if (form === null) {
+        return;
+    }
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formValues = getFormValues();
+        const tableRow = createTableRow(formValues);
+        const tableBody = document.querySelector('#table');
+        if (tableBody === null) {
+            return;
+        }
+        tableBody.appendChild(tableRow);
+    });
+}
 function getFormValues() {
     const date = document.querySelector('#date');
     const amount = document.querySelector('#amount');
     const description = document.querySelector('#description');
+    if (!date || !amount || !description) {
+        throw new Error();
+    }
     return {
         date: date.value,
         amount: amount.value,
